@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 
 public class Gui implements Runnable, Updateable {
 
-    public static final Dimension STANDARD_SIZE = new Dimension(600, 400);
+    public static final Dimension STANDARD_SIZE = new Dimension(800, 600);
 
     private JFrame frame;
     private Driving game;

@@ -4,12 +4,13 @@ import driving.Renderer.Body;
 import driving.Renderer.BodyCircle;
 import driving.Renderer.BodyTriangle;
 import driving.cars.Car;
+import driving.map.GameLevel;
 import driving.map.GameMap;
 import driving.map.GroundNode;
 import driving.ui.Gui;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.*;
+import javax.swing.SwingUtilities;
 
 public class Driving {
 
@@ -32,7 +33,7 @@ public class Driving {
 
     private final Gui gui;
     private Car car;
-    private GameMap map;
+    private GameLevel level;
     private final List<Drawable> drawables;
     private final List<Updateable> updateables;
 
@@ -43,12 +44,12 @@ public class Driving {
         reportMode = false;
         lastFrametime = 10;
 
-        map = new GameMap();
-        initMap();
+        GameMap map = initMap();
+        level = new GameLevel(map);
 
         car = new Car(100, 100, initBody());
         drawables = new ArrayList();
-        drawables.add(map);
+        drawables.add(level);
         drawables.add(car);
 
         gui = new Gui(this, drawables);
@@ -58,11 +59,13 @@ public class Driving {
         updateables.add(gui);
     }
 
-    private void initMap() {
-        map.add(new GroundNode(0, 0));
-        map.add(new GroundNode(100, 50));
-        map.add(new GroundNode(250, 100));
-        map.add(new GroundNode(400, 100));
+    private GameMap initMap() {
+        GameMap m = new GameMap();
+        m.add(new GroundNode(0, 0));
+        m.add(new GroundNode(100, 50));
+        m.add(new GroundNode(250, 100));
+        m.add(new GroundNode(400, 100));
+        return m;
     }
     
     //TEMP//
@@ -119,11 +122,15 @@ public class Driving {
         System.out.println("Framerate: " + (int) (1000 / lastFrametime) + " fps" + "  ||  Frametime: " + lastFrametime + " ms"
                 + "  ||  Frame# " + frameCounter);
         System.out.println("Car| x:" + (int) car.getX() + " y: " + (int) car.getY()
-                + " speed: " + (int) car.getVelocity().length());
+                + " speed: " + (int) car.getVelocity().length() + " direction: " + car.getOrientation().currentAngle()*180/Math.PI) ;
     }
 
     public int lastFrametime() {
         return (int) lastFrametime;
+    }
+    
+    public GameLevel getLevel() {
+        return level;
     }
 
     public Gui getGui() {

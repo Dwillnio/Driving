@@ -126,6 +126,10 @@ public class Car implements Drawable, Updateable {
         velocity.rotate(radians);
         body.rotate(radians);
     }
+    
+    public Vector getOrientation() {
+        return orientation;
+    }
 
     public double getX() {
         return x;
