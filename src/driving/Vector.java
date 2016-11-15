@@ -29,8 +29,12 @@ public class Vector {
         x += v.x * ratio;
         y += v.y * ratio;
     }
+    
+    public Vector inverseVec() {
+        return new Vector(-x, -y);
+    }
 
-    public double currentAngle() { //Might / Probably doestnt work
+    public double currentAngle() { 
         return Math.atan2(y, -x) + Math.PI;
     }
 

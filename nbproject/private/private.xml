@@ -3,14 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Willn/Documents/NetBeansProjects/Driving/src/driving/Driving.java</file>
-            <file>file:/C:/Users/Willn/Documents/NetBeansProjects/Driving/src/driving/ui/KeyInputHandler.java</file>
-            <file>file:/C:/Users/Willn/Documents/NetBeansProjects/Driving/src/driving/cars/Car.java</file>
-            <file>file:/C:/Users/Willn/Documents/NetBeansProjects/Driving/src/driving/map/GroundNode.java</file>
-            <file>file:/C:/Users/Willn/Documents/NetBeansProjects/Driving/src/driving/Vector.java</file>
-            <file>file:/C:/Users/Willn/Documents/NetBeansProjects/Driving/src/driving/Renderer/BodyCircle.java</file>
-            <file>file:/C:/Users/Willn/Documents/NetBeansProjects/Driving/src/driving/Point.java</file>
-            <file>file:/C:/Users/Willn/Documents/NetBeansProjects/Driving/src/driving/ui/Gui.java</file>
+            <file>file:/D:/Java/Driving/src/driving/Driving.java</file>
+            <file>file:/D:/Java/Driving/src/driving/Physics/Hitbox.java</file>
+            <file>file:/D:/Java/Driving/src/driving/Physics/VectorCollision.java</file>
+            <file>file:/D:/Java/Driving/src/driving/cars/Car.java</file>
+            <file>file:/D:/Java/Driving/src/driving/cars/CarFactory.java</file>
+            <file>file:/D:/Java/Driving/src/driving/Physics/CollisionDetector.java</file>
         </group>
     </open-files>
 </project-private>
