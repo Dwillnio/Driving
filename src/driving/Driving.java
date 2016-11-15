@@ -1,9 +1,12 @@
 package driving;
 
+import driving.Physics.CollisionDetector;
+import driving.Physics.Hitbox;
 import driving.Renderer.Body;
 import driving.Renderer.BodyCircle;
 import driving.Renderer.BodyTriangle;
 import driving.cars.Car;
+import driving.cars.CarFactory;
 import driving.map.GameLevel;
 import driving.map.GameMap;
 import driving.map.GroundNode;
@@ -36,6 +39,8 @@ public class Driving {
     private GameLevel level;
     private final List<Drawable> drawables;
     private final List<Updateable> updateables;
+    private final List<Hitbox> collideables;
+    private final CollisionDetector collisionSystem;
 
     private boolean reportMode;
     private double lastFrametime;
@@ -46,17 +51,31 @@ public class Driving {
 
         GameMap map = initMap();
         level = new GameLevel(map);
+        
+        CarFactory carFactory = new CarFactory();
+        
+        //TEMP
+        Car cTemp = carFactory.createStandardCar(500, 500);
 
-        car = new Car(100, 100, initBody());
+        car = carFactory.createStandardCar(100, 100);
         drawables = new ArrayList();
         drawables.add(level);
         drawables.add(car);
+        drawables.add(cTemp);
 
         gui = new Gui(this, drawables);
 
         updateables = new ArrayList<>();
         updateables.add(car);
         updateables.add(gui);
+        updateables.add(cTemp);
+        
+        collideables = new ArrayList();
+        collideables.add(car.getHitbox());
+        collideables.add(cTemp.getHitbox());
+        collisionSystem = new CollisionDetector(this);
+        
+        updateables.add(collisionSystem);
     }
 
     private GameMap initMap() {
@@ -66,18 +85,6 @@ public class Driving {
         m.add(new GroundNode(250, 100));
         m.add(new GroundNode(400, 100));
         return m;
-    }
-    
-    //TEMP//
-    private Body initBody() {
-        Point c = new Point(100, 100);
-        List<Drawable> d = new ArrayList<>();
-        d.add(new BodyCircle(c, -15, 0, 10));
-        d.add(new BodyCircle(c, 15, 0, 10));
-        d.add(new BodyTriangle(c, new Point(-15, 0), new Point(15,0), new Point(-15, -15)));
-        d.add(new BodyTriangle(c, new Point(15, 0), new Point(15,-15), new Point(-15, -15)));
-        Body b = new Body(d, c);
-        return b;
     }
 
     public void start() {
@@ -143,6 +150,10 @@ public class Driving {
 
     public boolean reportMode() {
         return reportMode;
+    }
+    
+    public List<Hitbox> getCollideables() {
+        return collideables;
     }
 
     public void setReportMode(boolean value) {

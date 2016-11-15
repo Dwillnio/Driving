@@ -2,6 +2,8 @@ package driving.cars;
 
 import driving.Drawable;
 import driving.Driving;
+import driving.Physics.Hitbox;
+import driving.Point;
 import driving.Renderer.Body;
 import driving.Updateable;
 import driving.Vector;
@@ -17,6 +19,7 @@ public class Car implements Drawable, Updateable {
     private final Vector orientation;
 
     private Body body;
+    private Hitbox hitbox;
 
     //Flags
     private boolean onGas;
@@ -25,6 +28,10 @@ public class Car implements Drawable, Updateable {
     private boolean rotateUp;
     private boolean rotateDown;
 
+    public Hitbox getHitbox() {
+        return hitbox;
+    }
+    
     public void setVelocityTurningUp(boolean velocityTurningLeft) {
         this.velocityTurningUp = velocityTurningLeft;
     }
@@ -57,11 +64,12 @@ public class Car implements Drawable, Updateable {
         return velocityTurningDown;
     }
 
-    public Car(double x, double y, Body body) {
+    public Car(double x, double y, Body body, Hitbox hitbox) {
         this.x = x;
         this.y = y;
         this.body = body;
-
+        this.hitbox = hitbox;
+        
         velocity = new Vector(0, 0);
         orientation = new Vector(1, 0);
         onGas = false;
@@ -86,10 +94,12 @@ public class Car implements Drawable, Updateable {
         if (rotateUp) {
             orientation.rotate(-Math.PI / 64 * frameFactor);
             body.rotate(-Math.PI / 64 * frameFactor);
+            hitbox.rotate(-Math.PI / 64 * frameFactor);
         }
         if (rotateDown) {
             orientation.rotate(Math.PI / 64 * frameFactor);
             body.rotate(Math.PI / 64 * frameFactor);
+            hitbox.rotate(Math.PI / 64 * frameFactor);
         }
     }
 
@@ -154,6 +164,7 @@ public class Car implements Drawable, Updateable {
     @Override
     public void draw(Graphics graphics) {
         body.draw(graphics);
+        hitbox.draw(graphics, x , y);
         /*
         graphics.setColor(Color.red);
 
