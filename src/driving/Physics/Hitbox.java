@@ -48,6 +48,10 @@ public class Hitbox implements Drawable {
     private Vector normalOrientation() {
         return new Vector(lowerRight.x - (upperLeft.x + orientation.x), lowerRight.y - (upperLeft.y + orientation.y));
     }
+    
+    public Point getPosition() {
+        return position;
+    }
 
     private boolean hittingVector(Point source, Vector vector) {
         return VectorCollision.vectorHittingVector(upperLeft, orientation, source, vector)

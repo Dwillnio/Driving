@@ -31,7 +31,7 @@ public class CarFactory {
     }
     
     private Hitbox initStandardHitbox(Point pos) {
-        return new Hitbox(pos, new Point(-25, -20), new Point(25, 5));
+        return new Hitbox(pos, new Point(-20, -17), new Point(20, 5));
     }
     
 }
