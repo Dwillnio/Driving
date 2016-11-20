@@ -12,6 +12,10 @@ public class Point implements Movable {
         this.y = y;
     }
     
+    public Point clone() {
+        return new Point(x,y);
+    }
+    
     @Override
     public void setPosition(double x, double y) {
         this.x = (int)x;

@@ -55,9 +55,9 @@ public class Driving {
         CarFactory carFactory = new CarFactory();
         
         //TEMP
-        Car cTemp = carFactory.createStandardCar(500, 500);
+        Car cTemp = carFactory.createStandardCar(new Point(500, 500));
 
-        car = carFactory.createStandardCar(100, 100);
+        car = carFactory.createStandardCar(new Point(100, 100));
         drawables = new ArrayList();
         drawables.add(level);
         drawables.add(car);

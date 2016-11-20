@@ -26,7 +26,7 @@ public class CollisionDetector implements Updateable {
                 if(y != x) {
                     
                     if(game.getCollideables().get(x).hittingBox(game.getCollideables().get(y))) {
-                        System.out.println("HIT!");
+                        System.out.println("HIT!" + (int)(Math.random() * 10));
                     }
                         
                 }

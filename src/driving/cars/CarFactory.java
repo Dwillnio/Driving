@@ -16,23 +16,22 @@ public class CarFactory {
        
     }
     
-    public Car createStandardCar(double x, double y) {
-        return new Car(x, y, initStandardBody(x,y), initStandardHitbox());
+    public Car createStandardCar(Point position) {
+        return new Car(position , initStandardBody(position), initStandardHitbox(position));
     }
     
-    private Body initStandardBody(double x, double y) {
-        Point c = new Point(x, y);
+    private Body initStandardBody(Point pos) {
         List<Drawable> d = new ArrayList<>();
-        d.add(new BodyCircle(c, -15, 0, 10));
-        d.add(new BodyCircle(c, 15, 0, 10));
-        d.add(new BodyTriangle(c, new Point(-15, 0), new Point(15,0), new Point(-15, -15)));
-        d.add(new BodyTriangle(c, new Point(15, 0), new Point(15,-15), new Point(-15, -15)));
-        Body b = new Body(d, c);
+        d.add(new BodyCircle(pos, -15, 0, 10));
+        d.add(new BodyCircle(pos, 15, 0, 10));
+        d.add(new BodyTriangle(pos, new Point(-15, 0), new Point(15,0), new Point(-15, -15)));
+        d.add(new BodyTriangle(pos, new Point(15, 0), new Point(15,-15), new Point(-15, -15)));
+        Body b = new Body(d, pos);
         return b;
     }
     
-    private Hitbox initStandardHitbox() {
-        return new Hitbox(new Point(-25, -20), new Point(25, 5));
+    private Hitbox initStandardHitbox(Point pos) {
+        return new Hitbox(pos, new Point(-25, -20), new Point(25, 5));
     }
     
 }

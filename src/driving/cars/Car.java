@@ -12,14 +12,13 @@ import java.awt.Graphics;
 
 public class Car implements Drawable, Updateable {
 
-    private double x;
-    private double y;
+    private final Point position;
 
     private final Vector velocity;
     private final Vector orientation;
 
-    private Body body;
-    private Hitbox hitbox;
+    private final Body body;
+    private final Hitbox hitbox;
 
     //Flags
     private boolean onGas;
@@ -31,7 +30,7 @@ public class Car implements Drawable, Updateable {
     public Hitbox getHitbox() {
         return hitbox;
     }
-    
+
     public void setVelocityTurningUp(boolean velocityTurningLeft) {
         this.velocityTurningUp = velocityTurningLeft;
     }
@@ -64,20 +63,19 @@ public class Car implements Drawable, Updateable {
         return velocityTurningDown;
     }
 
-    public Car(double x, double y, Body body, Hitbox hitbox) {
-        this.x = x;
-        this.y = y;
+    public Car(Point pos, Body body, Hitbox hitbox) {
         this.body = body;
         this.hitbox = hitbox;
-        
+
+        position = pos;
         velocity = new Vector(0, 0);
         orientation = new Vector(1, 0);
         onGas = false;
     }
 
     private void move(double frameFactor) {
-        x += velocity.x * frameFactor;
-        y += velocity.y * frameFactor;
+        position.x += velocity.x * frameFactor;
+        position.y += velocity.y * frameFactor;
         body.move(velocity.x * frameFactor, velocity.y * frameFactor);
     }
 
@@ -136,17 +134,21 @@ public class Car implements Drawable, Updateable {
         velocity.rotate(radians);
         body.rotate(radians);
     }
-    
+
     public Vector getOrientation() {
         return orientation;
     }
 
+    public Point getPosition() {
+        return position;
+    }
+
     public double getX() {
-        return x;
+        return position.x;
     }
 
     public double getY() {
-        return y;
+        return position.y;
     }
 
     public Vector getVelocity() {
@@ -164,16 +166,18 @@ public class Car implements Drawable, Updateable {
     @Override
     public void draw(Graphics graphics) {
         body.draw(graphics);
-        hitbox.draw(graphics, x , y);
+        hitbox.draw(graphics);
         /*
         graphics.setColor(Color.red);
 
         graphics.fillRect((int) x -25, (int) y, 50, 20);
          */
         graphics.setColor(Color.GREEN);
-        graphics.drawLine((int) x, (int) y, (int) (x + (25 * velocity.x)), (int) (y + (25 * velocity.y)));
+        graphics.drawLine((int) position.x, (int) position.y,
+                (int) (position.x + (25 * velocity.x)), (int) (position.y + (25 * velocity.y)));
 
         graphics.setColor(Color.RED);
-        graphics.drawLine((int) x, (int) y, (int) (x + (25 * orientation.x)), (int) (y + (25 * orientation.y)));
+        graphics.drawLine((int) position.x, (int) position.y,
+                (int) (position.x + (25 * orientation.x)), (int) (position.y + (25 * orientation.y)));
     }
 }
