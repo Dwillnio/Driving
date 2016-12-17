@@ -9,8 +9,9 @@ public class CollisionHandler {
     }
     
     public void handleCollision(Collision collision) {
-        if(collision == null) return;
-        
+        if(collision != null) {
+            
+        }
     }
     
 }

@@ -2,6 +2,7 @@ package driving.cars;
 
 import driving.Drawable;
 import driving.Driving;
+import driving.GameObject;
 import driving.Physics.Hitbox;
 import driving.Point;
 import driving.Renderer.Body;
@@ -10,15 +11,11 @@ import driving.Vector;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Car implements Drawable, Updateable {
-
-    private final Point position;
+public class Car extends GameObject implements Drawable, Updateable  {
 
     private final Vector velocity;
-    private final Vector orientation;
 
     private final Body body;
-    private final Hitbox hitbox;
 
     //Flags
     private boolean onGas;
@@ -26,10 +23,6 @@ public class Car implements Drawable, Updateable {
     private boolean velocityTurningDown;
     private boolean rotateUp;
     private boolean rotateDown;
-
-    public Hitbox getHitbox() {
-        return hitbox;
-    }
 
     public void setVelocityTurningUp(boolean velocityTurningLeft) {
         this.velocityTurningUp = velocityTurningLeft;
@@ -64,12 +57,12 @@ public class Car implements Drawable, Updateable {
     }
 
     public Car(Point pos, Body body, Hitbox hitbox) {
+        super(pos);
         this.body = body;
-        this.hitbox = hitbox;
+        super.hitbox = hitbox;
 
-        position = pos;
         velocity = new Vector(0, 0);
-        orientation = new Vector(1, 0);
+        super.orientation = new Vector(1, 0);
         onGas = false;
     }
 
@@ -135,14 +128,6 @@ public class Car implements Drawable, Updateable {
         body.rotate(radians);
     }
 
-    public Vector getOrientation() {
-        return orientation;
-    }
-
-    public Point getPosition() {
-        return position;
-    }
-
     public double getX() {
         return position.x;
     }
@@ -174,10 +159,12 @@ public class Car implements Drawable, Updateable {
          */
         graphics.setColor(Color.GREEN);
         graphics.drawLine((int) position.x, (int) position.y,
-                (int) (position.x + (25 * velocity.x)), (int) (position.y + (25 * velocity.y)));
+                (int) (position.x + (25 * velocity.x)),
+                (int) (position.y + (25 * velocity.y)));
 
         graphics.setColor(Color.RED);
         graphics.drawLine((int) position.x, (int) position.y,
-                (int) (position.x + (25 * orientation.x)), (int) (position.y + (25 * orientation.y)));
+                (int) (position.x + (25 * orientation.x)),
+                (int) (position.y + (25 * orientation.y)));
     }
 }
