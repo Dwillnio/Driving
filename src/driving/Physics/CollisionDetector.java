@@ -7,10 +7,12 @@ import driving.Updateable;
 
 public class CollisionDetector implements Updateable {
 
-    private Driving game;
+    private final Driving game;
+    private final CollisionHandler collisionHandler;
     
     public CollisionDetector(Driving game) {
         this.game = game;
+        collisionHandler = new CollisionHandler();
     }
     
     @Override
@@ -20,18 +22,20 @@ public class CollisionDetector implements Updateable {
     
     @Override
     public void update(double frameTime) {
+        Collision c;
+        
         for(int x = 0; x < game.getCollideables().size(); x++) {
             
             for(int y = 0; y < game.getCollideables().size(); y++) {
                 if(y != x) {
                     
-                    if(game.getCollideables().get(x).hittingBox(game.getCollideables().get(y))) {
-                        System.out.println("HIT!" + (int)(Math.random() * 10));
+                    c = game.getCollideables().get(x).hittingBox(game.getCollideables().get(y));
+                    
+                    if(c != null) {
+                        collisionHandler.handleCollision(c);
                     }
-                        
                 }
             }
-            
         }
     }
     

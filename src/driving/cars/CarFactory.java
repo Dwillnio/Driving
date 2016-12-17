@@ -17,7 +17,9 @@ public class CarFactory {
     }
     
     public Car createStandardCar(Point position) {
-        return new Car(position , initStandardBody(position), initStandardHitbox(position));
+        Car c = new Car(position , initStandardBody(position));
+        c.setHitbox(initStandardHitbox(c, position));
+        return c;
     }
     
     private Body initStandardBody(Point pos) {
@@ -30,8 +32,8 @@ public class CarFactory {
         return b;
     }
     
-    private Hitbox initStandardHitbox(Point pos) {
-        return new Hitbox(pos, new Point(-20, -17), new Point(20, 5));
+    private Hitbox initStandardHitbox(Car c, Point pos) {
+        return new Hitbox(c, pos, new Point(-20, -17), new Point(20, 5));
     }
     
 }

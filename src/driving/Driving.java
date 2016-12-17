@@ -2,9 +2,6 @@ package driving;
 
 import driving.Physics.CollisionDetector;
 import driving.Physics.Hitbox;
-import driving.Renderer.Body;
-import driving.Renderer.BodyCircle;
-import driving.Renderer.BodyTriangle;
 import driving.cars.Car;
 import driving.cars.CarFactory;
 import driving.map.GameLevel;
@@ -35,8 +32,8 @@ public class Driving {
     public final static double INTENDED_FRAMETIME = 10.0;
 
     private final Gui gui;
-    private Car car;
-    private GameLevel level;
+    private final Car car;
+    private final GameLevel level;
     private final List<Drawable> drawables;
     private final List<Updateable> updateables;
     private final List<Hitbox> collideables;

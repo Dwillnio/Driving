@@ -13,8 +13,6 @@ import java.awt.Graphics;
 
 public class Car extends GameObject implements Drawable, Updateable  {
 
-    private final Vector velocity;
-
     private final Body body;
 
     //Flags
@@ -54,6 +52,14 @@ public class Car extends GameObject implements Drawable, Updateable  {
 
     public boolean isVelocityTurningDown() {
         return velocityTurningDown;
+    }
+    
+    public void setHitbox(Hitbox h) {
+        this.hitbox = h;
+    }
+    
+    public Car(Point pos, Body body) {
+        this(pos, body, null);
     }
 
     public Car(Point pos, Body body, Hitbox hitbox) {
@@ -109,6 +115,10 @@ public class Car extends GameObject implements Drawable, Updateable  {
 
     @Override
     public void update(double frameTime) {
+        if(collisionCooldown > 0) {
+            collisionCooldown--;
+        }
+        
         double frameFactor = frameTime / Driving.INTENDED_FRAMETIME;
 
         if (onGas) {
@@ -116,7 +126,7 @@ public class Car extends GameObject implements Drawable, Updateable  {
         } else if (velocity.length() > 0.2 * frameFactor) {
             deccelerate(frameFactor);
         } else {
-            velocity.scale(0.999 * frameFactor);
+            velocity.scale(0.99);
         }
         rotate(frameFactor);
         rotateVelocity(frameFactor);
@@ -134,10 +144,6 @@ public class Car extends GameObject implements Drawable, Updateable  {
 
     public double getY() {
         return position.y;
-    }
-
-    public Vector getVelocity() {
-        return velocity;
     }
 
     public boolean onGas() {

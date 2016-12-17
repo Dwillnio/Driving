@@ -1,6 +1,7 @@
 package driving.Physics;
 
 import driving.Drawable;
+import driving.GameObject;
 import driving.Point;
 import driving.Vector;
 import java.awt.Color;
@@ -13,8 +14,11 @@ public class Hitbox implements Drawable {
     private final Point position;
 
     private final Vector orientation;
-
-    public Hitbox(Point position, Point upperLeft, Point lowerRight) {
+    
+    private final GameObject parent;
+    
+    public Hitbox(GameObject parent, Point position, Point upperLeft, Point lowerRight) {
+        this.parent = parent;
         this.lowerRight = lowerRight;
         this.upperLeft = upperLeft;
         this.position = position;
@@ -42,13 +46,13 @@ public class Hitbox implements Drawable {
         System.out.println("Hit: " +(p.x >= ul.x && p.x <= lr.x && p.y <= ul.y && p.y >= lr.y));
         System.out.println("" + (p.x >= ul.x) + " " + (p.x <= lr.x) + " " + (p.y <= ul.y)  + " " + (p.y >= lr.y));
          */
-        return (p.x >= ul.x) && (p.x <= lr.x) && (p.y >= ul.y) && (p.y <= lr.y); //y comparision that way bcs of inverse y-axis
-    }
+        return ((p.x >= ul.x) && (p.x <= lr.x) && (p.y >= ul.y) && (p.y <= lr.y));
+    } //y comparision that way bcs of inverse y-axis
 
     private Vector normalOrientation() {
         return new Vector(lowerRight.x - (upperLeft.x + orientation.x), lowerRight.y - (upperLeft.y + orientation.y));
     }
-    
+
     public Point getPosition() {
         return position;
     }
@@ -60,17 +64,22 @@ public class Hitbox implements Drawable {
                 || VectorCollision.vectorHittingVector(upperLeft, orientation.inverseVec(), source, vector);
     }
 
-    public boolean hittingBox(Hitbox h) {
+    public Collision hittingBox(Hitbox h) {
         Point otherUpperLeft = new Point(h.upperLeft.x + (h.position.x - position.x),
                 h.upperLeft.y + (h.position.y - position.y));
         Point otherLowerRight = new Point(h.lowerRight.x + (h.position.x - position.x),
                 h.lowerRight.y + (h.position.y - position.y));
-        
-        return hittingPoint(otherUpperLeft)
+
+        if(hittingPoint(otherUpperLeft)
                 || hittingPoint(otherLowerRight)
                 || hittingPoint(new Point(otherUpperLeft.x + h.orientation.x, otherUpperLeft.y + h.orientation.y))
                 || hittingPoint(new Point(otherLowerRight.x + h.orientation.inverseVec().x,
-                        otherLowerRight.y + h.orientation.inverseVec().y)); /*
+                        otherLowerRight.y + h.orientation.inverseVec().y))) {
+            return new Collision(parent, h.parent);
+        } else {
+            return null;
+        }
+        /*
                 || hittingVector(otherUpperLeft, h.orientation)
                 || hittingVector(otherUpperLeft, h.normalOrientation())
                 || hittingVector(otherLowerRight, h.orientation.inverseVec())

@@ -13,6 +13,16 @@ public class Vector {
     public double length() {
         return Math.pow(x * x + y * y, 0.5);
     }
+    
+    public void add(Vector v) {
+        x += v.x;
+        y += v.y;
+    }
+    
+    public void subtract(Vector v) {
+        x -= v.x;
+        y -= v.y;
+    }
 
     public void scale(double factor) {
         x *= factor;
@@ -44,5 +54,18 @@ public class Vector {
 
         x = prevX * Math.cos(radians) - prevY * Math.sin(radians);
         y = prevX * Math.sin(radians) + prevY * Math.cos(radians);
+    }
+    
+    public double dotProduct(Vector v) {
+        return x * v.x + y * v.y;
+    }
+    
+    public Vector unitVector() {
+        double length = Math.sqrt(x*x + y*y);
+        return new Vector(x / length, y / length);
+    }
+    
+    public Vector clone() {
+        return new Vector(x,y);
     }
 }
